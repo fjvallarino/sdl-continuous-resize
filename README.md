@@ -36,5 +36,9 @@ A few notes:
 - The rendering thread needs to call `SDL_GL_MakeCurrent`, otherwise it will
   crash.
 - You can use `ghcid` to dynamically test changes without recompiling.
-- You may need to create two OpenGL contexts, as mentioned in
-  https://skryabiin.wordpress.com/2015/04/25/hello-world/
+- On Windows, you need to create two OpenGL contexts, as mentioned in
+  https://skryabiin.wordpress.com/2015/04/25/hello-world/. The second context
+  created will be marked as current in the main thread, while the first context
+  created will be the one we keep. If you don't create the second context, the
+  application will crash. If you create a second context in macOS, the window
+  will flicker on window resize.

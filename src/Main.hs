@@ -4,22 +4,27 @@ module Main where
 
 import Control.Concurrent (forkIO, forkOS)
 import Control.Concurrent.STM.TChan (TChan, newTChanIO, readTChan, writeTChan)
-import Control.Monad (forever, unless)
+import Control.Monad (unless, void, when)
 import Control.Monad.STM (atomically)
+import Data.Text (Text)
 
+import Foreign.C (peekCString)
 import Foreign.C.Types
 
 import SDL
 
 import qualified Data.Set as Set
+import qualified Data.Text as T
 import qualified Graphics.Rendering.OpenGL as GL
 import qualified NanoVG as VG
+import qualified SDL.Raw as Raw
 
 foreign import ccall unsafe "initGlew" glewInit :: IO CInt
 
 main :: IO ()
 main = do
   initialize [InitVideo]
+  platform <- getPlatform
 
   window <- createWindow "SDL Continuous Resize" WindowConfig {
     windowBorder = True,
@@ -32,9 +37,12 @@ main = do
     windowInitialSize = V2 800 600,
     windowVisible = True
   }
-  
-  ctx1 <- glCreateContext window
-  --ctx2 <- glCreateContext window
+
+  ctxRender <- glCreateContext window
+
+  when (platform == "Windows") $
+    void $ glCreateContext window
+
   _ <- glewInit
 
   channel <- newTChanIO
@@ -48,7 +56,7 @@ main = do
       _ -> return ()
 
   forkOS $ do
-    glMakeCurrent window ctx1
+    glMakeCurrent window ctxRender
     nvg <- VG.createGL3 (Set.fromList [VG.Antialias, VG.StencilStrokes])
     renderLoop window channel nvg
 
@@ -107,3 +115,9 @@ renderLoop window channel nvg = do
 
   unless shouldQuit $
     renderLoop window channel nvg
+
+getPlatform :: IO Text
+getPlatform = do
+  platform <- peekCString =<< Raw.getPlatform
+
+  return $ T.pack platform

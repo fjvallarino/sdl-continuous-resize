@@ -34,23 +34,12 @@ executable sdl-continuous-resize
       cbits/glew.c
   build-depends:
       OpenGL
-    , async
     , base >=4.7 && <5
-    , bytestring
-    , concurrent-extra
     , containers
-    , data-default
-    , exceptions
-    , extra
-    , lens
-    , mtl
     , nanovg
     , sdl2
     , stm
     , text
-    , transformers
-    , unordered-containers
-    , vector
   if os(windows)
     extra-libraries:
         glew32

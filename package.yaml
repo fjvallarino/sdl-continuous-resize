@@ -20,24 +20,13 @@ extra-source-files:
 description: Please see the README on GitHub at <https://github.com/fjvallarino/sdl-continuous-resize#readme>
 
 dependencies:
-- async
 - base >= 4.7 && < 5
-- bytestring
 - containers
-- concurrent-extra
-- data-default
-- exceptions
-- extra
-- lens
-- mtl
 - nanovg
 - OpenGL
 - sdl2
 - stm
 - text
-- transformers
-- unordered-containers
-- vector
 
 executables:
   sdl-continuous-resize:
