@@ -1,0 +1,57 @@
+name: sdl-continuous-resize
+version: 0.1.0.0
+github: "fjvallarino/sdl-continuous-resize"
+license: BSD3
+author: "Francisco Vallarino"
+maintainer: "fjvallarino@gmail.com"
+copyright: "2021 Francisco Vallarino"
+
+extra-source-files:
+- README.md
+- ChangeLog.md
+
+# Metadata used when publishing your package
+# synopsis:            Short description of your package
+# category:            Web
+
+# To avoid duplicated efforts in documentation and dealing with the
+# complications of embedding Haddock markup inside cabal files, it is
+# common to point users to the README.md file.
+description: Please see the README on GitHub at <https://github.com/fjvallarino/sdl-continuous-resize#readme>
+
+dependencies:
+- async
+- base >= 4.7 && < 5
+- bytestring
+- containers
+- concurrent-extra
+- data-default
+- exceptions
+- extra
+- lens
+- mtl
+- nanovg
+- OpenGL
+- sdl2
+- stm
+- text
+- transformers
+- unordered-containers
+- vector
+
+executables:
+  sdl-continuous-resize:
+    main: Main.hs
+    source-dirs: src
+    c-sources:
+    - cbits/glew.c
+    when:
+      - condition: os(windows)
+        then:
+          extra-libraries: glew32
+        else:
+          extra-libraries: GLEW
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
