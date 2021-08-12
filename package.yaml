@@ -1,10 +1,10 @@
 name: sdl-continuous-resize
 version: 0.1.0.0
-github: "fjvallarino/sdl-continuous-resize"
+github: fjvallarino/sdl-continuous-resize
 license: BSD3
-author: "Francisco Vallarino"
-maintainer: "fjvallarino@gmail.com"
-copyright: "2021 Francisco Vallarino"
+author: Francisco Vallarino
+maintainer: fjvallarino@gmail.com
+copyright: 2021 Francisco Vallarino
 
 extra-source-files:
 - README.md
